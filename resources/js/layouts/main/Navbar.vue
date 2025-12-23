@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { home as homeRoute } from '@/routes';
+import incomeRoutes from '@/routes/incomes';
 import { Link, usePage } from '@inertiajs/vue3';
 import { ArrowRightLeftIcon, HomeIcon, PiggyBankIcon } from 'lucide-vue-next';
 
@@ -7,13 +9,13 @@ const page = usePage();
 const links = [
     {
         label: 'Incomes',
-        href: '/incomes',
+        href: incomeRoutes.index().url,
         icon: PiggyBankIcon,
-        active: page.url.startsWith('/incomes'),
+        active: page.url.startsWith(incomeRoutes.index().url),
     },
     {
         label: 'Home',
-        href: '/',
+        href: homeRoute().url,
         icon: HomeIcon,
         active: page.url === '/',
     },

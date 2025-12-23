@@ -16,7 +16,7 @@ defineProps<{
 
     <div class="h-24"></div>
 
-    <Container as="main">
+    <Container as="main" class="pt-20 pb-28">
         <slot></slot>
     </Container>
 
