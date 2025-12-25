@@ -35,7 +35,7 @@ import { Form } from '@inertiajs/vue3';
                         <Input
                             id="note"
                             name="note"
-                            placeholder="Grocery"
+                            placeholder="Salary"
                             :disabled="processing"
                         />
                         <div class="flex items-center">
@@ -64,16 +64,22 @@ import { Form } from '@inertiajs/vue3';
                             <NumberFieldInput
                                 class="font-mono font-medium"
                                 autofocus
+                                required
                             />
                             <NumberFieldIncrement />
                         </NumberFieldContent>
-                        <FieldError>{{ errors.amount }}</FieldError>
+                        <div class="flex items-center">
+                            <FieldError>{{ errors.amount }}</FieldError>
+                            <FieldDescription class="ml-auto">
+                                Minimum amount: $0.01
+                            </FieldDescription>
+                        </div>
                     </NumberField>
                 </div>
                 <div class="mt-6 space-x-4 md:mt-8">
                     <Button type="submit" size="lg" :disabled="processing">
                         <Spinner v-if="processing" />
-                        Save
+                        Create
                     </Button>
                     <Button type="reset" variant="secondary" size="lg">
                         Reset
