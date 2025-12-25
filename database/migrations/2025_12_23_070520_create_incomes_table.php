@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->id();
             $table->integer('amount')->unsigned();
             $table->string('note')->nullable();
+            $table->date('date')->default(date("Y-m-d H:i:s"));
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });

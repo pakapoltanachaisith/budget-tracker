@@ -34,7 +34,8 @@ class IncomeController extends Controller
 
         $validated = $request->validate(rules: [
             'note' => ['string', 'nullable', 'max:255'],
-            'amount' => ['required', 'decimal:0,2', 'min:0.01']
+            'amount' => ['required', 'decimal:0,2', 'min:0.01'],
+            'date' => ['required', 'date']
         ]);
 
         $amount = (int) ((float) $validated['amount'] * 100);

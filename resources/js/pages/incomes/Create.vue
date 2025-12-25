@@ -75,6 +75,18 @@ import { Form } from '@inertiajs/vue3';
                             </FieldDescription>
                         </div>
                     </NumberField>
+                    <Field>
+                        <FieldLabel for="date">Date</FieldLabel>
+                        <Input
+                            id="date"
+                            name="date"
+                            type="date"
+                            :defaultValue="
+                                new Date().toISOString().split('T')[0]
+                            "
+                        />
+                        <FieldError>{{ errors?.date }}</FieldError>
+                    </Field>
                 </div>
                 <div class="mt-6 space-x-4 md:mt-8">
                     <Button type="submit" size="lg" :disabled="processing">
