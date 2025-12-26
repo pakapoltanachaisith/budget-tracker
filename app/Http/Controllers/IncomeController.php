@@ -14,7 +14,15 @@ class IncomeController extends Controller
             return to_route('home');
         }
 
-        return Inertia::render('incomes/Index');
+        $monthlyIncome = $request
+            ->user()
+            ->incomes()
+            ->monthlyTotalForYear(now()->year)
+            ->get();
+
+        return Inertia::render('incomes/Index', [
+            'monthlyIncome' => $monthlyIncome
+        ]);
     }
 
     public function create(Request $request)

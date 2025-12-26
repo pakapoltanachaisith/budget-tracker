@@ -2,6 +2,16 @@
 import MainLayout from '@/layouts/MainLayout.vue';
 import { create } from '@/routes/incomes';
 import { Link } from '@inertiajs/vue3';
+
+const props = defineProps<{
+    monthlyIncome: {
+        month: number;
+        month_name: string;
+        total: number;
+    }[];
+}>();
+
+console.log(props.monthlyIncome);
 </script>
 
 <template>
