@@ -36,4 +36,10 @@ export interface User {
     updated_at: string;
 }
 
+export type MonthlyIncome = {
+    month: number;
+    month_name: string;
+    total: number;
+};
+
 export type BreadcrumbItemType = BreadcrumbItem;

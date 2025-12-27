@@ -14,14 +14,14 @@ class IncomeController extends Controller
             return to_route('home');
         }
 
-        $monthlyIncome = $request
+        $monthlyIncomes = $request
             ->user()
             ->incomes()
             ->monthlyTotalForYear(now()->year)
             ->get();
 
         return Inertia::render('incomes/Index', [
-            'monthlyIncome' => $monthlyIncome
+            'monthlyIncomes' => $monthlyIncomes
         ]);
     }
 
