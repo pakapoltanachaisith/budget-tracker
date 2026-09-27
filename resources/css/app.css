@@ -41,3 +41,9 @@
     --depth: 0;
     --noise: 1;
 }
+
+html,
+body,
+:root {
+    height: 100%;
+}
