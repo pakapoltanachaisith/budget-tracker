@@ -25,13 +25,6 @@
         </div>
         <div class="fieldset">
           <label for="passoword" class="fieldset-legend">Password</label>
-          {{-- <input
-            type="password"
-            name="password"
-            id="password"
-            class="input w-full"
-            required
-          > --}}
           <x-password-input
             class="w-full"
             name="password"
