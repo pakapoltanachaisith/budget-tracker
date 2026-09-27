@@ -2,7 +2,8 @@
   <div class="space-y-6 lg:space-y-8">
     <h1 class="text-4xl font-bold text-center">Log In</h1>
 
-    <form>
+    <form action="{{ route('login') }}" method="POST">
+      @csrf
       <div class="space-y-4">
         <div class="fieldset">
           <label for="name" class="fieldset-legend">Email Address</label>

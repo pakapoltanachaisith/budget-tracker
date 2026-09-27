@@ -7,4 +7,7 @@ Route::get('/', function () {
     return view('home');
 })->middleware('auth');
 
-Route::get('login', [SessionController::class, 'login'])->name('login');
+Route::middleware('guest')->group(function () {
+    Route::get('login', [SessionController::class, 'create'])->name('login');
+    Route::post('login', [SessionController::class, 'store']);
+});
