@@ -11,7 +11,10 @@
 
 <body>
   <h1 class="text-3xl">Hello World</h1>
-  <button class="btn btn-primary">Hello</button>
+  <form action="{{ route('logout') }}" method="POST">
+    @csrf
+    <button class="btn btn-error">Logout</button>
+  </form>
 </body>
 
 </html>
