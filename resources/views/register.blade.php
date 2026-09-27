@@ -42,26 +42,24 @@
 
         <div class="fieldset">
           <label for="passoword" class="fieldset-legend">Password</label>
-          <input
-            type="password"
+          <x-password-input
             name="password"
             id="password"
             class="input w-full"
             required
-          >
+          />
           @error('password')
             <span class="label text-error">{{ $message }}</span>
           @enderror
         </div>
         <div class="fieldset">
           <label for="password_confirmation" class="fieldset-legend">Confirm Password</label>
-          <input
-            type="password"
+          <x-password-input
             name="password_confirmation"
             id="password_confirmation"
             class="input w-full"
             required
-          >
+          />
         </div>
       </div>
       <div class="mt-7">

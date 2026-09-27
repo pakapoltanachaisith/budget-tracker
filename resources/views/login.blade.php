@@ -25,13 +25,19 @@
         </div>
         <div class="fieldset">
           <label for="passoword" class="fieldset-legend">Password</label>
-          <input
+          {{-- <input
             type="password"
             name="password"
             id="password"
             class="input w-full"
             required
-          >
+          > --}}
+          <x-password-input
+            class="w-full"
+            name="password"
+            id="password"
+            requited
+          />
           @error('password')
             <span class="label text-error">{{ $message }}</span>
           @enderror
