@@ -46,7 +46,7 @@
     </form>
 
     <div class="text-center text-sm text-gray-500">
-      Don't have an account? <a class="text-primary ml-1.5">Register</a>
+      Don't have an account? <a href="{{ route('register') }}" class="text-primary ml-1.5">Register</a>
     </div>
   </div>
 </x-layouts.auth>
