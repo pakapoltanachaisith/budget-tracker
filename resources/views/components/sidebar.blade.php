@@ -9,12 +9,27 @@
       <a href="/" class="text-lg font-extrabold">Budget Tracker</a>
     </div>
     <div class="flex-1 py-4">
-      <ul class="menu lg:menu-lg bg-base-100 w-full">
+      <ul class="menu rounded-box w-full space-y-1">
+        <x-sidebar-link
+          href="/"
+          label="Home"
+          icon="fa-regular fa-house"
+          :active="request()->is('/')"
+        />
         <li>
-          <a href="/" @class(['menu-active' => request()->is('/')])>
-            <i class="fa-regular fa-house"></i>
-            Home
+          <a href="{{ route('expenses.index') }}" @class(['menu-active' => request()->routeIs('expenses.index')])>
+            <i class="fa-regular fa-credit-card"></i>
+            Expenses
           </a>
+          <ul>
+            <x-sidebar-link
+              href="{{ route('expenses.create') }}"
+              label="Add expense"
+              icon="fa-solid fa-plus"
+              :active="request()->routeIs('expenses.create')"
+            />
+
+          </ul>
         </li>
       </ul>
     </div>
