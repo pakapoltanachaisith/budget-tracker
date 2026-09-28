@@ -23,7 +23,7 @@
   <div
     x-data
     @keyup.escape.window="$refs.drawerToggle.checked = false"
-    class="drawer lg:drawer-open h-full"
+    class="drawer lg:drawer-open h-screen overflow-hidden"
   >
     <input
       type="checkbox"
@@ -33,9 +33,9 @@
       x-ref="drawerToggle"
     >
 
-    <div class="drawer-content bg-base-200 h-full">
+    <div class="drawer-content bg-base-200 h-full overflow-auto flex flex-col">
       <x-navbar />
-      <main class="p-5 lg:p-10">{{ $slot }}</main>
+      <main class="p-5 lg:p-10 flex-1 overflow-auto">{{ $slot }}</main>
     </div>
 
     <x-sidebar />
