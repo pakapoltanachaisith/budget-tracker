@@ -1,8 +1,9 @@
 <x-layouts.dashboard title="My Expenses">
-  <h1>My Expenses</h1>
-  <ul>
-    @foreach ($expenses as $expense)
-      <li>{{ "$expense->amount - $expense->note" }}</li>
-    @endforeach
-  </ul>
+  <div class="mb-5 lg:mb-10">
+    <h1 class="text-3xl font-bold">My Expenses</h1>
+  </div>
+
+  <div>
+    <x-expenses-table :expenses="$expenses" />
+  </div>
 </x-layouts.dashboard>
