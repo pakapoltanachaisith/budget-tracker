@@ -15,6 +15,7 @@
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
   >
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>{{ $title ? "$title | Budget Tracker" : 'Budget Tracker' }}</title>
 </head>
@@ -35,7 +36,7 @@
 
     <div class="drawer-content bg-base-200 h-full overflow-auto flex flex-col">
       <x-navbar />
-      <main class="p-5 lg:p-10 flex-1 overflow-auto">{{ $slot }}</main>
+      <main class="p-4 lg:p-10 flex-1 overflow-auto">{{ $slot }}</main>
     </div>
 
     <x-sidebar />
