@@ -12,9 +12,14 @@ class ExpenseController extends Controller
             ->user()
             ->expenses()
             ->latest()
-            ->get();
+            ->paginate(20);
 
-        return view('expenses.index', ['expenses' => $expenses]);
+        $expenseCount = $request->user()->expenses()->count();
+
+        return view('expenses.index', [
+            'expenses' => $expenses,
+            'expenseCount' => $expenseCount
+        ]);
     }
 
     public function create()
