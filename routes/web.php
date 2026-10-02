@@ -11,7 +11,7 @@ Route::get('/', function () {
 
 Route::middleware('auth')->group(function () {
     Route::post('logout', [SessionController::class, 'destroy'])->name('logout');
-    Route::resource('expenses', ExpenseController::class)->only(['index', 'create', 'store', 'edit', 'update']);
+    Route::resource('expenses', ExpenseController::class)->except(['show']);
 });
 
 Route::middleware('guest')->group(function () {

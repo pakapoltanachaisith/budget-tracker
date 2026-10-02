@@ -63,4 +63,15 @@ class ExpenseController extends Controller
 
         return redirect()->route('expenses.index');
     }
+
+    public function destroy(Request $request, Expense $expense)
+    {
+        $expense->delete();
+
+        if ($request->hasHeader('HX-Request') && !$request->hasHeader('HX-Boosted')) {
+            return null;
+        }
+
+        return redirect()->route('expenses.index');
+    }
 }

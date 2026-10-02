@@ -3,7 +3,7 @@
 <ul class="space-y-4">
   @foreach ($expenses as $expense)
     <li
-      class="py-4 bg-base-100 rounded-lg  border-transparent hover:border-primary hover:-translate-y-1 hover:scale-102 transition-all"
+      class="expense-list-item py-4 bg-base-100 rounded-lg  border-transparent hover:border-primary hover:-translate-y-1 hover:scale-102 transition-all"
     >
       <div class="px-4 lg:px-6 flex h-12">
         {{-- Icon --}}
@@ -36,10 +36,21 @@
             <i class="ti ti-edit"></i>
             Edit
           </a>
-          <button class="btn btn-sm btn-error btn-soft btn-square" type="button">
-            <span class="sr-only">Delete</span>
-            <i class="ti ti-trash"></i>
-          </button>
+          <form
+            action="{{ route('expenses.destroy', [$expense]) }}"
+            method="POST"
+            hx-delete="{{ route('expenses.destroy', [$expense]) }}"
+            hx-target="closest li"
+            hx-swap="outerHTML"
+            hx-confirm="Do you wish to delete this expense?"
+          >
+            @csrf
+            @method('DELETE')
+            <button class="btn btn-sm btn-error btn-soft btn-square">
+              <span class="sr-only">Delete</span>
+              <i class="ti ti-trash"></i>
+            </button>
+          </form>
         </div>
       </div>
     </li>
