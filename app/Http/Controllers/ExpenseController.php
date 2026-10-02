@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Expense;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
 class ExpenseController extends Controller
@@ -31,6 +32,8 @@ class ExpenseController extends Controller
 
     public function store(Request $request)
     {
+        Gate::authorize('create', Expense::class);
+
         $validated = $request->validate([
             'amount' => ['required', 'decimal:0,2', 'min:0.01'],
             'note' => ['required', 'string', 'nullable', 'sometimes', 'max:255'],
@@ -46,12 +49,16 @@ class ExpenseController extends Controller
 
     public function edit(Expense $expense)
     {
+        Gate::authorize('update', $expense);
+
         $expense->amount = $expense->amount / 100;
         return view('expenses.edit', ['expense' => $expense]);
     }
 
     public function update(Request $request, Expense $expense)
     {
+        Gate::authorize('update', $expense);
+
         $validated = $request->validate([
             'amount' => ['required', 'decimal:0,2', 'min:0.01'],
             'note' => ['required', 'string', 'nullable', 'sometimes', 'max:255'],
@@ -66,6 +73,8 @@ class ExpenseController extends Controller
 
     public function destroy(Request $request, Expense $expense)
     {
+        Gate::authorize('delete', $expense);
+
         $expense->delete();
 
         if ($request->hasHeader('HX-Request') && !$request->hasHeader('HX-Boosted')) {
