@@ -4,7 +4,7 @@
     <div class="fieldset">
       <label for="email" class="fieldset-legend">Email Address</label>
       <div class="input w-full">
-        <i class="fa-regular fa-envelope text-gray-400"></i>
+        <i class="ti ti-mail text-gray-400"></i>
         <input
           type="email"
           class="grow"
@@ -50,7 +50,7 @@
   <div class="mt-7">
     <button class="btn btn-primary w-full">
       Continue
-      <i class="fa-solid fa-chevron-right text-primary-content"></i>
+      <i class="ti ti-chevron-right-filled text-primary-content"></i>
     </button>
   </div>
 </form>

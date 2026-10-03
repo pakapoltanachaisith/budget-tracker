@@ -1,7 +1,7 @@
 <div class="navbar bg-base-100 shadow-sm">
   <div class="flex-none">
     <label for="dashboard-drawer" class="btn btn-square btn-ghost lg:hidden">
-      <i class="fa-solid fa-bars"></i>
+      <i class="ti ti-menu-2"></i>
       <span class="sr-only">open sidebar</span>
     </label>
   </div>

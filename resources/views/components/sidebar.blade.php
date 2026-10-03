@@ -13,19 +13,19 @@
         <x-sidebar-link
           href="/"
           label="Home"
-          icon="fa-regular fa-house"
+          icon="ti ti-home-2"
           :active="request()->is('/')"
         />
         <li>
           <a href="{{ route('expenses.index') }}" @class(['menu-active' => request()->routeIs('expenses.index')])>
-            <i class="fa-regular fa-credit-card"></i>
+            <i class="ti ti-credit-card"></i>
             Expenses
           </a>
           <ul>
             <x-sidebar-link
               href="{{ route('expenses.create') }}"
               label="Add expense"
-              icon="fa-solid fa-plus"
+              icon="ti ti-circle-plus"
               :active="request()->routeIs('expenses.create')"
             />
 
