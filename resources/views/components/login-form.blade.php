@@ -31,6 +31,21 @@
         <span class="label text-error">{{ $message }}</span>
       @enderror
     </div>
+    <div class="fieldset">
+      <label class="fieldset-label">
+        <input
+          type="checkbox"
+          class="checkbox"
+          name="remember_me"
+          value="true"
+          @checked(old('remember_me'))
+        >
+        Remember me
+      </label>
+      @error('remember_me')
+        <span class="fieldset-label text-error">{{ $message }}</span>
+      @enderror
+    </div>
   </div>
   <div class="mt-7">
     <button class="btn btn-primary w-full">

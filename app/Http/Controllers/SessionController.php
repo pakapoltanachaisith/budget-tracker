@@ -16,10 +16,18 @@ class SessionController extends Controller
     {
         $credentials = $request->validate([
             'email' => ['string', 'required', 'email'],
-            'password' => ['string', 'required']
+            'password' => ['string', 'required'],
+            'remember_me' => ['accepted', 'sometimes'],
         ]);
 
-        if (Auth::attempt($credentials)) {
+
+        $userData = [
+            'email' => $credentials['email'],
+            'password' => $credentials['password'],
+        ];
+        $rememberMe = $credentials['remember_me'] ?? false;
+
+        if (Auth::attempt($userData, $rememberMe)) {
             $request->session()->regenerate();
             return redirect()->intended('/');
         }
