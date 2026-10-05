@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ExpenseCategory;
 use App\Models\Expense;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -36,8 +37,9 @@ class ExpenseController extends Controller
 
         $validated = $request->validate([
             'amount' => ['required', 'decimal:0,2', 'min:0.01'],
-            'note' => ['required', 'string', 'nullable', 'sometimes', 'max:255'],
-            'date' => ['required', Rule::date()->beforeOrEqual(today()->toDate())]
+            'note' => ['string', 'nullable', 'sometimes', 'max:255'],
+            'date' => ['required', Rule::date()->beforeOrEqual(today()->toDate())],
+            'category' => ['required', Rule::enum(ExpenseCategory::class)],
         ]);
 
         $validated['amount'] = $validated['amount'] * 100;
@@ -61,8 +63,9 @@ class ExpenseController extends Controller
 
         $validated = $request->validate([
             'amount' => ['required', 'decimal:0,2', 'min:0.01'],
-            'note' => ['required', 'string', 'nullable', 'sometimes', 'max:255'],
-            'date' => ['required', Rule::date()->beforeOrEqual(today()->toDate())]
+            'note' => ['string', 'nullable', 'sometimes', 'max:255'],
+            'date' => ['required', Rule::date()->beforeOrEqual(today()->toDate())],
+            'category' => ['required', Rule::enum(ExpenseCategory::class)],
         ]);
 
         $validated['amount'] = $validated['amount'] * 100;

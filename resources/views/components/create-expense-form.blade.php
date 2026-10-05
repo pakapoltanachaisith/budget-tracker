@@ -1,3 +1,8 @@
+@php
+  use App\Enums\ExpenseCategory;
+  $categories = ExpenseCategory::cases();
+@endphp
+
 <form action="{{ route('expenses.store') }}" method="POST">
   @csrf
   <div class="space-y-3">
@@ -46,6 +51,23 @@
       >
       @error('date')
         <span class="label text-error">{{ $message }}</span>
+      @enderror
+    </div>
+    <div class="fieldset">
+      <label for="category" class="fieldset-legend">Category</label>
+      <select
+        name="category"
+        id="category"
+        class="select w-full"
+        required
+      >
+        <option disabled selected>Pick a category</option>
+        @foreach ($categories as $category)
+          <option value="{{ $category->value }}" class="capitalize">{{ $category->value }}</option>
+        @endforeach
+      </select>
+      @error('category')
+        <span class="fieldset-label text-error">{{ $message }}</span>
       @enderror
     </div>
   </div>

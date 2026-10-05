@@ -1,5 +1,10 @@
 @props(['expense'])
 
+@php
+  use App\Enums\ExpenseCategory;
+  $categories = ExpenseCategory::cases();
+@endphp
+
 <form action="{{ route('expenses.update', [$expense]) }}" method="POST">
   @method('PUT')
   @csrf
@@ -49,6 +54,26 @@
       >
       @error('date')
         <span class="label text-error">{{ $message }}</span>
+      @enderror
+    </div>
+    <div class="fieldset">
+      <label for="category" class="fieldset-legend">Category</label>
+      <select
+        name="category"
+        id="category"
+        class="select w-full"
+        required
+      >
+        @foreach ($categories as $category)
+          <option
+            value="{{ $category->value }}"
+            @selected(old('category', $expense->category) === $category)
+            class="capitalize"
+          >{{ $category->value }}</option>
+        @endforeach
+      </select>
+      @error('category')
+        <span class="fieldset-label text-error">{{ $message }}</span>
       @enderror
     </div>
   </div>

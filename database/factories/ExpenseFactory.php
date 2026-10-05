@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\ExpenseCategory;
 use App\Models\Expense;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -22,7 +23,8 @@ class ExpenseFactory extends Factory
             'amount' => fake()->numberBetween(500, 5_000),
             'note' => fake()->sentence(),
             'date' => fake()->dateTimeBetween('-3 years'),
-            'user_id' => User::factory()
+            'user_id' => User::factory(),
+            'category' => fake()->randomElement(ExpenseCategory::cases()),
         ];
     }
 }

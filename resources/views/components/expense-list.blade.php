@@ -7,12 +7,10 @@
     >
       <div class="px-4 lg:px-6 flex h-12">
         {{-- Icon --}}
-        <div class="bg-orange-200/50 flex items-center justify-center size-12 aspect-square rounded-lg shrink-0">
-          <i class="ti ti-soup text-orange-900 text-2xl font-light"></i>
-        </div>
+        <x-expense-icon :category="$expense->category" />
         {{-- Category & Note --}}
         <div class="ml-4 flex flex-col justify-between grow pr-5 truncate max-w-[70%]">
-          <span class="text-lg">Food</span>
+          <span class="text-lg capitalize">{{ $expense->category }}</span>
           @if ($expense?->note)
             <span class="text-sm text-neutral-500 font-thin truncate">{{ $expense->note }}</span>
           @endif
