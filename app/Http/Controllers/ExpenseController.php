@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\ExpenseCategory;
+use App\Http\Requests\StoreExpenseRequest;
+use App\Http\Requests\UpdateExpenseRequest;
 use App\Models\Expense;
+use App\Traits\HtmxRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Validation\Rule;
 
 class ExpenseController extends Controller
 {
+    use HtmxRequest;
+
     public function index(Request $request)
     {
         $expenses = $request
@@ -31,17 +34,9 @@ class ExpenseController extends Controller
         return view('expenses.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreExpenseRequest $request)
     {
-        Gate::authorize('create', Expense::class);
-
-        $validated = $request->validate([
-            'amount' => ['required', 'decimal:0,2', 'min:0.01'],
-            'note' => ['string', 'nullable', 'sometimes', 'max:255'],
-            'date' => ['required', Rule::date()->beforeOrEqual(today()->toDate())],
-            'category' => ['required', Rule::enum(ExpenseCategory::class)],
-        ]);
-
+        $validated = $request->validated();
         $validated['amount'] = $validated['amount'] * 100;
 
         $request->user()->expenses()->create($validated);
@@ -57,16 +52,9 @@ class ExpenseController extends Controller
         return view('expenses.edit', ['expense' => $expense]);
     }
 
-    public function update(Request $request, Expense $expense)
+    public function update(UpdateExpenseRequest $request, Expense $expense)
     {
-        Gate::authorize('update', $expense);
-
-        $validated = $request->validate([
-            'amount' => ['required', 'decimal:0,2', 'min:0.01'],
-            'note' => ['string', 'nullable', 'sometimes', 'max:255'],
-            'date' => ['required', Rule::date()->beforeOrEqual(today()->toDate())],
-            'category' => ['required', Rule::enum(ExpenseCategory::class)],
-        ]);
+        $validated = $request->validated();
 
         $validated['amount'] = $validated['amount'] * 100;
         $expense->update($validated);
@@ -74,13 +62,13 @@ class ExpenseController extends Controller
         return redirect()->route('expenses.index');
     }
 
-    public function destroy(Request $request, Expense $expense)
+    public function destroy(Expense $expense)
     {
         Gate::authorize('delete', $expense);
 
         $expense->delete();
 
-        if ($request->hasHeader('HX-Request') && !$request->hasHeader('HX-Boosted')) {
+        if ($this->isHxAjax()) {
             return null;
         }
 
