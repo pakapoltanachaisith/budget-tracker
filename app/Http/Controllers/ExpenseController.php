@@ -31,7 +31,9 @@ class ExpenseController extends Controller
 
     public function create()
     {
-        return view('expenses.create');
+        return view('expenses.create', [
+            'isHxAjax' => $this->isHxAjax(),
+        ]);
     }
 
     public function store(StoreExpenseRequest $request)
@@ -39,7 +41,11 @@ class ExpenseController extends Controller
         $validated = $request->validated();
         $validated['amount'] = $validated['amount'] * 100;
 
-        $request->user()->expenses()->create($validated);
+        $expense = $request->user()->expenses()->create($validated);
+
+        if ($this->isHxAjax()) {
+            return view('expenses.store-swap', ['expense' => $expense]);
+        }
 
         return redirect()->route('expenses.index');
     }

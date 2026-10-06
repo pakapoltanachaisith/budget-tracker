@@ -3,7 +3,10 @@
   $categories = ExpenseCategory::cases();
 @endphp
 
-<form action="{{ route('expenses.store') }}" method="POST">
+<form {{ $attributes->merge([
+    'method' => 'POST',
+    'action' => route('expenses.store'),
+]) }}>
   @csrf
   <div class="space-y-3">
     <div class="fieldset">
@@ -61,7 +64,11 @@
         class="select w-full"
         required
       >
-        <option disabled selected>Pick a category</option>
+        <option
+          disabled
+          selected
+          value=""
+        >Pick a category</option>
         @foreach ($categories as $category)
           <option value="{{ $category->value }}" class="capitalize">{{ $category->value }}</option>
         @endforeach

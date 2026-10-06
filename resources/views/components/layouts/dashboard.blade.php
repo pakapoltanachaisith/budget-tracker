@@ -34,6 +34,7 @@
 
     <x-sidebar />
   </div>
+  <div id="modal"></div>
 </body>
 
 </html>

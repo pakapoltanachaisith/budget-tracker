@@ -5,9 +5,11 @@ namespace App\Http\Requests;
 use App\Enums\ExpenseCategory;
 use App\Models\Expense;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Foundation\Http\Attributes\RedirectToRoute;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
+#[RedirectToRoute('expenses.create')]
 class StoreExpenseRequest extends FormRequest
 {
     /**
