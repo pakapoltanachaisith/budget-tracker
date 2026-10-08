@@ -23,6 +23,10 @@ class ExpenseController extends Controller
 
         $expenseCount = $request->user()->expenses()->count();
 
+        if ($this->isHxAjax()) {
+            return view('expenses.index-swap', ['expenses' => $expenses]);
+        }
+
         return view('expenses.index', [
             'expenses' => $expenses,
             'expenseCount' => $expenseCount

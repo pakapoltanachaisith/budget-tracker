@@ -17,11 +17,27 @@
     </div>
 
     <div>
-      <x-expense-list :expenses="$expenses" />
+      <ul id="expenses-list" class="space-y-4">
+        @foreach ($expenses->items() as $expense)
+          <x-expense-list-item :expense="$expense" />
+        @endforeach
+      </ul>
+      @if ($expenses->hasMorePages())
+        <div
+          id="load-more"
+          class="text-center py-4"
+          hx-get="{{ $expenses->nextPageUrl() }}"
+          hx-trigger="intersect"
+        >
+          <span class="htmx-indicator loading loading-dots loading-md text-primary"></span>
+        </div>
+      @endif
     </div>
 
-    <div class="text-center lg:text-right mt-10">
-      {{ $expenses->links('components.expense-pagination') }}
-    </div>
+    <noscript>
+      <div class="text-center lg:text-right mt-10">
+        {{ $expenses->links('components.expense-pagination') }}
+      </div>
+    </noscript>
   </x-container>
 </x-layouts.dashboard>
