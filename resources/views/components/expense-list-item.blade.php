@@ -1,6 +1,6 @@
 @props(['expense'])
 
-<li
+<li id="{{ "expense-list-item-$expense->id" }}"
   class="expense-list-item py-4 bg-base-100 rounded-lg  border-transparent hover:border-primary hover:-translate-y-1 hover:scale-102 transition-all"
 >
   <div class="px-4 lg:px-6 flex h-12">
@@ -27,7 +27,9 @@
       <a
         href="{{ route('expenses.edit', [$expense]) }}"
         class="btn btn-sm"
-        type="button"
+        hx-get="{{ route('expenses.edit', [$expense]) }}"
+        hx-target="#modal"
+        hx-swap="innerHTML"
       >
         <i class="ti ti-edit"></i>
         Edit

@@ -5,7 +5,10 @@
   $categories = ExpenseCategory::cases();
 @endphp
 
-<form action="{{ route('expenses.update', [$expense]) }}" method="POST">
+<form {{ $attributes->merge([
+    'method' => 'POST',
+    'action' => route('expenses.update', [$expense]),
+]) }}>
   @method('PUT')
   @csrf
   <div class="space-y-3">

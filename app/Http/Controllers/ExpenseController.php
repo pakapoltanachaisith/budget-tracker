@@ -55,7 +55,11 @@ class ExpenseController extends Controller
         Gate::authorize('update', $expense);
 
         $expense->amount = $expense->amount / 100;
-        return view('expenses.edit', ['expense' => $expense]);
+
+        return view('expenses.edit', [
+            'expense' => $expense,
+            'isHxAjax' => $this->isHxAjax(),
+        ]);
     }
 
     public function update(UpdateExpenseRequest $request, Expense $expense)
@@ -64,6 +68,10 @@ class ExpenseController extends Controller
 
         $validated['amount'] = $validated['amount'] * 100;
         $expense->update($validated);
+
+        if ($this->isHxAjax()) {
+            return view('expenses.update-swap', ['expense' => $expense->fresh()]);
+        }
 
         return redirect()->route('expenses.index');
     }
