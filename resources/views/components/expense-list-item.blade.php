@@ -1,6 +1,8 @@
 @props(['expense'])
 
-<li id="{{ "expense-list-item-$expense->id" }}"
+<li
+  {{ $attributes->merge() }}
+  id="{{ "expense-list-item-$expense->id" }}"
   class="expense-list-item py-4 bg-base-100 rounded-lg  border-transparent hover:border-primary hover:-translate-y-1 hover:scale-102 transition-all"
 >
   <div class="px-4 lg:px-6 flex h-12">

@@ -18,20 +18,22 @@
 
     <div>
       <ul id="expenses-list" class="space-y-4">
-        @foreach ($expenses->items() as $expense)
-          <x-expense-list-item :expense="$expense" />
-        @endforeach
+        @fragment('list-items')
+          @foreach ($expenses as $expense)
+            @if ($expenses->hasMorePages() && $expenses->count() === $loop->iteration)
+              <x-expense-list-item
+                :expense="$expense"
+                hx-get="{{ $expenses->nextPageUrl() }}"
+                hx-target="this"
+                hx-swap="afterend"
+                hx-trigger="intersect"
+              />
+            @else
+              <x-expense-list-item :expense="$expense" />
+            @endif
+          @endforeach
+        @endfragment
       </ul>
-      @if ($expenses->hasMorePages())
-        <div
-          id="load-more"
-          class="text-center py-4"
-          hx-get="{{ $expenses->nextPageUrl() }}"
-          hx-trigger="intersect"
-        >
-          <span class="htmx-indicator loading loading-dots loading-md text-primary"></span>
-        </div>
-      @endif
     </div>
 
     <noscript>
