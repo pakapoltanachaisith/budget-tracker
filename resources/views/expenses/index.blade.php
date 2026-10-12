@@ -1,5 +1,6 @@
 <x-layouts.dashboard title="My Expenses">
   <x-container>
+    {{-- Header --}}
     <div class="mb-5 lg:mb-10 flex items-baseline">
       <div class="grow">
         <h1 class="text-3xl font-bold">My Expenses</h1>
@@ -16,34 +17,35 @@
       </a>
     </div>
 
-    <div class="mb-5 lg:mb-10">
-      <x-expenses-filters :monthlyArray="$monthlyArray" :activeMonth="$activeMonth" />
-    </div>
-
-    <div>
-      <ul id="expenses-list" class="space-y-4">
-        @fragment('list-items')
-          @foreach ($expenses as $expense)
-            @if ($expenses->hasMorePages() && $expenses->count() === $loop->iteration)
-              <x-expense-list-item
-                :expense="$expense"
-                hx-get="{{ $expenses->nextPageUrl() }}"
-                hx-target="this"
-                hx-swap="afterend"
-                hx-trigger="intersect"
-              />
-            @else
-              <x-expense-list-item :expense="$expense" />
-            @endif
-          @endforeach
-        @endfragment
-      </ul>
-    </div>
-
-    <noscript>
-      <div class="text-center lg:text-right mt-10">
-        {{ $expenses->links('components.expense-pagination') }}
+    {{-- Expense List and Filters --}}
+    <div class="grid grid-cols-3 gap-5">
+      <div class="col-span-3 lg:col-span-2">
+        <ul id="expenses-list" class="space-y-4">
+          @fragment('list-items')
+            @foreach ($expenses as $expense)
+              @if ($expenses->hasMorePages() && $expenses->count() === $loop->iteration)
+                <x-expense-list-item
+                  :expense="$expense"
+                  hx-get="{{ $expenses->nextPageUrl() }}"
+                  hx-target="this"
+                  hx-swap="afterend"
+                  hx-trigger="intersect"
+                />
+              @else
+                <x-expense-list-item :expense="$expense" />
+              @endif
+            @endforeach
+          @endfragment
+        </ul>
       </div>
-    </noscript>
+
+      <div class="hidden lg:block">
+        <x-expenses-filters
+          :monthlyArray="$monthlyArray"
+          :activeMonth="$activeMonth"
+          :activeCategories="$activeCategories"
+        />
+      </div>
+    </div>
   </x-container>
 </x-layouts.dashboard>

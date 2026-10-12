@@ -18,27 +18,31 @@ class ExpenseController extends Controller
     public function index(Request $request)
     {
         $activeMonth = $request->has('month') ? Carbon::parse($request->input('month')) : Carbon::today();
+        $activeCategories = $request->collect('categories');
 
-        $expenses = $request
+        $query = $request
             ->user()
             ->expenses()
             ->whereMonth('date', $activeMonth->month)
-            ->whereYear('date', $activeMonth->year)
+            ->whereYear('date', $activeMonth->year);
+
+        if ($activeCategories->isNotEmpty()) {
+            $query->whereIn('category', $activeCategories);
+        }
+
+        $expenses = $query
             ->latest()
             ->paginate(20);
 
-        $expenseCount = $request
-            ->user()
-            ->expenses()
-            ->whereMonth('date', $activeMonth->month)
-            ->whereYear('date', $activeMonth->year)
+        $expenseCount = $query
             ->count();
 
         return view('expenses.index', [
             'expenses' => $expenses,
             'expenseCount' => $expenseCount,
             'monthlyArray' => $this->generateMonthlyArray(),
-            'activeMonth' => $activeMonth->toDateString()
+            'activeMonth' => $activeMonth->toDateString(),
+            'activeCategories' => $activeCategories,
         ])->fragmentIf($this->isHxAjax(), 'list-items');
     }
 

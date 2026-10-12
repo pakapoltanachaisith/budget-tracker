@@ -29,7 +29,7 @@
 
     <div class="drawer-content bg-base-200 h-full overflow-auto flex flex-col">
       <x-navbar />
-      <main class="p-4 lg:p-10 flex-1 overflow-auto">{{ $slot }}</main>
+      <main class="p-4 lg:p-6 flex-1 overflow-auto">{{ $slot }}</main>
     </div>
 
     <x-sidebar />
