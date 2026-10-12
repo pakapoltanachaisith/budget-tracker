@@ -6,15 +6,22 @@
         <h1 class="text-3xl font-bold">My Expenses</h1>
         <p class="text-sm font-thin mt-2">{{ $expenseCount }} {{ Str::plural('expense entry', $expenseCount) }}</p>
       </div>
-      <a
-        href="{{ route('expenses.create') }}"
-        class="btn btn-neutral"
-        hx-get="{{ route('expenses.create') }}"
-        hx-target="#modal"
-      >
-        Add
-        <i class="ti ti-plus"></i>
-      </a>
+      <div>
+        <x-expense-filters-modal
+          :monthlyArray="$monthlyArray"
+          :activeMonth="$activeMonth"
+          :activeCategories="$activeCategories"
+        />
+        <a
+          href="{{ route('expenses.create') }}"
+          class="btn btn-neutral"
+          hx-get="{{ route('expenses.create') }}"
+          hx-target="#modal"
+        >
+          Add
+          <i class="ti ti-plus"></i>
+        </a>
+      </div>
     </div>
 
     {{-- Expense List and Filters --}}
@@ -39,7 +46,8 @@
         </ul>
       </div>
 
-      <div class="hidden lg:block">
+      <div class="hidden lg:block self-start bg-base-100 p-4 shadow rounded-box">
+        <h3 class="text-neutral-500 text-xs font-medium">Filters</h3>
         <x-expenses-filters
           :monthlyArray="$monthlyArray"
           :activeMonth="$activeMonth"
