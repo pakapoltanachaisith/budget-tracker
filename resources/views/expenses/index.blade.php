@@ -16,6 +16,10 @@
       </a>
     </div>
 
+    <div class="mb-5 lg:mb-10">
+      <x-expenses-filters :monthlyArray="$monthlyArray" :activeMonth="$activeMonth" />
+    </div>
+
     <div>
       <ul id="expenses-list" class="space-y-4">
         @fragment('list-items')

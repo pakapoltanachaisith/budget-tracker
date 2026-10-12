@@ -7,6 +7,8 @@ use App\Http\Requests\UpdateExpenseRequest;
 use App\Models\Expense;
 use App\Traits\HtmxRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Gate;
 
 class ExpenseController extends Controller
@@ -15,17 +17,28 @@ class ExpenseController extends Controller
 
     public function index(Request $request)
     {
+        $activeMonth = $request->has('month') ? Carbon::parse($request->input('month')) : Carbon::today();
+
         $expenses = $request
             ->user()
             ->expenses()
+            ->whereMonth('date', $activeMonth->month)
+            ->whereYear('date', $activeMonth->year)
             ->latest()
             ->paginate(20);
 
-        $expenseCount = $request->user()->expenses()->count();
+        $expenseCount = $request
+            ->user()
+            ->expenses()
+            ->whereMonth('date', $activeMonth->month)
+            ->whereYear('date', $activeMonth->year)
+            ->count();
 
         return view('expenses.index', [
             'expenses' => $expenses,
-            'expenseCount' => $expenseCount
+            'expenseCount' => $expenseCount,
+            'monthlyArray' => $this->generateMonthlyArray(),
+            'activeMonth' => $activeMonth->toDateString()
         ])->fragmentIf($this->isHxAjax(), 'list-items');
     }
 
@@ -87,5 +100,33 @@ class ExpenseController extends Controller
         }
 
         return redirect()->route('expenses.index');
+    }
+
+    private function generateMonthlyArray(): Collection
+    {
+        $oldestExpense = request()
+            ->user()
+            ->expenses()
+            ->oldest('date')
+            ->first();
+
+        if (!$oldestExpense) {
+            return collect([]);
+        }
+
+        $from = Carbon::parse($oldestExpense->date)->startOfMonth();
+        $to = Carbon::today()->startOfMonth();
+
+        if ($from->isSameMonth($to)) {
+            return collect([]);
+        }
+
+        $months = collect([$to->copy()]);
+        while ($months->last()->greaterThan($from)) {
+            $prevMonth = $months->last()->copy()->subMonth();
+            $months->push($prevMonth);
+        }
+
+        return $months->map(fn($month) => $month->toDateString());
     }
 }
