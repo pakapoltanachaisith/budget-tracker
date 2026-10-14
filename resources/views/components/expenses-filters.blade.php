@@ -54,7 +54,7 @@
   </div>
 
   {{-- Buttons --}}
-  <div class="mt-5 flex lg:flex-col gap-2">
+  <div class="mt-5 flex flex-col gap-2">
     <button type="submit" class="btn btn-sm btn-primary btn-soft">Apply Filter</button>
     <a href="{{ route('expenses.index') }}" class="btn btn-sm">Reset</a>
   </div>
