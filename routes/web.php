@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
@@ -12,6 +13,7 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
     Route::post('logout', [SessionController::class, 'destroy'])->name('logout');
     Route::resource('expenses', ExpenseController::class)->except(['show']);
+    Route::resource('incomes', IncomeController::class)->only(['index', 'create']);
 });
 
 Route::middleware('guest')->group(function () {

@@ -31,6 +31,21 @@
 
           </ul>
         </li>
+        <li>
+          <a href="{{ route('incomes.index') }}" @class(['menu-active' => request()->routeIs('incomes.index')])>
+            <i class="ti ti-pig-money"></i>
+            Incomes
+          </a>
+          <ul>
+            <x-sidebar-link
+              href="{{ route('incomes.create') }}"
+              label="Add income"
+              icon="ti ti-circle-plus"
+              :active="request()->routeIs('incomes.create')"
+            />
+
+          </ul>
+        </li>
       </ul>
     </div>
     <div class="px-4 py-3">

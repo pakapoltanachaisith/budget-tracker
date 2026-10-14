@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Expense;
+use App\Models\Income;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -19,6 +20,7 @@ class DatabaseSeeder extends Seeder
     {
         User::factory()
             ->has(Expense::factory()->count(200))
+            ->has(Income::factory()->count(100))
             ->create([
                 'name' => 'John Doe',
                 'email' => 'john@example.com',
