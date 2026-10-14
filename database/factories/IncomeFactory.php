@@ -1,0 +1,30 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Enums\IncomeCategory;
+use App\Models\Income;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends Factory<Income>
+ */
+class IncomeFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            'amount' => fake()->numberBetween(500, 5_000),
+            'note' => fake()->sentence(),
+            'date' => fake()->dateTimeBetween('-3 years'),
+            'user_id' => User::factory(),
+            'category' => fake()->randomElement(IncomeCategory::cases()),
+        ];
+    }
+}
