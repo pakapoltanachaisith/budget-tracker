@@ -19,6 +19,7 @@ class ExpenseController extends Controller
     {
         $activeMonth = $request->has('month') ? Carbon::parse($request->input('month')) : Carbon::today();
         $activeCategories = $request->collect('categories');
+        $searchTerm = $request->input('search');
 
         $query = $request
             ->user()
@@ -28,6 +29,9 @@ class ExpenseController extends Controller
 
         if ($activeCategories->isNotEmpty()) {
             $query->whereIn('category', $activeCategories);
+        }
+        if (!is_null($searchTerm) && $searchTerm !== '') {
+            $query->whereLike('note', "%$searchTerm%", caseSensitive: false);
         }
 
         $expenses = $query
@@ -43,6 +47,7 @@ class ExpenseController extends Controller
             'monthlyArray' => $this->generateMonthlyArray(),
             'activeMonth' => $activeMonth->toDateString(),
             'activeCategories' => $activeCategories,
+            'searchTerm' => $searchTerm
         ])->fragmentIf($this->isHxAjax(), 'list-items');
     }
 

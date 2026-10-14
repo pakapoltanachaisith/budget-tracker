@@ -11,6 +11,7 @@
           :monthlyArray="$monthlyArray"
           :activeMonth="$activeMonth"
           :activeCategories="$activeCategories"
+          :searchTerm="$searchTerm"
         />
         <a
           href="{{ route('expenses.create') }}"
@@ -52,6 +53,7 @@
           :monthlyArray="$monthlyArray"
           :activeMonth="$activeMonth"
           :activeCategories="$activeCategories"
+          :searchTerm="$searchTerm"
         />
       </div>
     </div>

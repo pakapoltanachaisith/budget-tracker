@@ -1,4 +1,4 @@
-@props(['monthlyArray', 'activeMonth', 'activeCategories'])
+@props(['monthlyArray', 'activeMonth', 'activeCategories', 'searchTerm'])
 
 @php
   use Illuminate\Support\Carbon;
@@ -10,6 +10,19 @@
 <form action="{{ route('expenses.index') }}" method="GET">
   {{-- Inputs --}}
   <div>
+    <div class="fieldset">
+      <label for="search" class="fieldset-legend">Search</label>
+      <div class="input input-sm w-full">
+        <i class="ti ti-search"></i>
+        <input
+          type="search"
+          name="search"
+          id="search"
+          class="grow"
+          value="{{ $searchTerm ?? '' }}"
+        >
+      </div>
+    </div>
     <div class="fieldset">
       <label for="month" class="fieldset-legend">Month</label>
       <select
