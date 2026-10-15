@@ -1,5 +1,6 @@
 @if ($isHxAjax)
   <x-modal
+    id="create-expense-modal"
     x-data
     x-init="$root.showModal()"
     @close="$root.remove()"
