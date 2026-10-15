@@ -1,25 +1,14 @@
 @if ($isHxAjax)
-  <dialog
-    id="create-expense-modal"
-    class="modal"
+  <x-modal
     x-data
     x-init="$root.showModal()"
     @close="$root.remove()"
   >
-    <div class="modal-box" @click.outside="$root.close()">
-      <button
-        type="button"
-        class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-        commandfor="create-expense-modal"
-        command="close"
-      >
-        <span class="sr-only">close</span>
-        <i class="ti ti-x"></i>
-      </button>
+    <div @click.outside="$root.close()">
       <h3 class="text-lg font-bold">New Expense</h3>
       <x-create-expense-form hx-post="{{ route('expenses.store') }}" />
     </div>
-  </dialog>
+  </x-modal>
 @else
   <x-layouts.dashboard title="Add Expenses">
     <x-container>
