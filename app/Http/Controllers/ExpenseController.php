@@ -35,7 +35,7 @@ class ExpenseController extends Controller
         }
 
         $expenses = $query
-            ->latest()
+            ->latest('date')
             ->paginate(20);
 
         $expenseCount = $query

@@ -32,7 +32,7 @@ class IncomeController extends Controller
         }
 
         $incomes = $query
-            ->latest()
+            ->latest('date')
             ->paginate(20);
 
         return view('incomes.index', [
