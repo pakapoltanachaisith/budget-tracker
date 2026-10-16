@@ -13,7 +13,7 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
     Route::post('logout', [SessionController::class, 'destroy'])->name('logout');
     Route::resource('expenses', ExpenseController::class)->except(['show']);
-    Route::resource('incomes', IncomeController::class)->only(['index', 'create', 'store']);
+    Route::resource('incomes', IncomeController::class)->only(['index', 'create', 'store', 'destroy']);
 });
 
 Route::middleware('guest')->group(function () {

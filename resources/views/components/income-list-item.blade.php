@@ -37,9 +37,9 @@
         Edit
       </a>
       <form
-        action="#"
+        action="{{ route('incomes.destroy', [$income]) }}"
         method="POST"
-        hx-delete="#"
+        hx-delete="{{ route('incomes.destroy', [$income]) }}"
         hx-target="closest li"
         hx-swap="outerHTML"
         hx-confirm="Do you wish to delete this income?"

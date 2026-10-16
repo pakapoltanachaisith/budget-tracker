@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreIncomeRequest;
+use App\Models\Income;
 use App\Traits\HtmxRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Gate;
 
 class IncomeController extends Controller
 {
@@ -62,6 +64,19 @@ class IncomeController extends Controller
 
         if ($this->isHxAjax()) {
             return view('incomes.store-swap', ['income' => $income]);
+        }
+
+        return redirect()->route('incomes.index');
+    }
+
+    public function destroy(Income $income)
+    {
+        Gate::authorize('update', $income);
+
+        $income->delete();
+
+        if ($this->isHxAjax()) {
+            return null;
         }
 
         return redirect()->route('incomes.index');
