@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreIncomeRequest;
 use App\Traits\HtmxRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -47,7 +48,23 @@ class IncomeController extends Controller
 
     public function create()
     {
-        return view('incomes.create');
+        return view('incomes.create', [
+            'isHxAjax' => $this->isHxAjax(),
+        ]);
+    }
+
+    public function store(StoreIncomeRequest $request)
+    {
+        $validated = $request->validated();
+        $validated['amount'] = $validated['amount'] * 100;
+
+        $income = $request->user()->incomes()->create($validated);
+
+        if ($this->isHxAjax()) {
+            return view('incomes.store-swap', ['income' => $income]);
+        }
+
+        return redirect()->route('incomes.index');
     }
 
     private function generateMonthlyArray(): Collection

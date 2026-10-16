@@ -14,9 +14,9 @@
           :searchTerm="$searchTerm"
         />
         <a
-          href="#"
+          href="{{ route('incomes.create') }}"
           class="btn btn-neutral"
-          hx-get="#"
+          hx-get="{{ route('incomes.create') }}"
           hx-target="#modal"
         >
           Add
