@@ -27,9 +27,9 @@
   <div class="px-4 lg:px-6 text-right">
     <div class="join">
       <a
-        href="#"
+        href="{{ route('incomes.edit', [$income]) }}"
         class="btn btn-sm"
-        hx-get="#"
+        hx-get="{{ route('incomes.edit', [$income]) }}"
         hx-target="#modal"
         hx-swap="innerHTML"
       >
