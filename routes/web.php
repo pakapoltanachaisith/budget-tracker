@@ -7,7 +7,7 @@ Route::inertia('/', 'welcome')->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('dashboard', 'dashboard')->name('dashboard');
-    Route::resource('incomes', IncomeController::class)->only(['index']);
+    Route::resource('incomes', IncomeController::class)->only(['index', 'create', 'store']);
 });
 
 require __DIR__ . '/settings.php';

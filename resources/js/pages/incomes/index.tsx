@@ -1,7 +1,8 @@
+import { Button } from "@/components/ui/button";
 import AppLayout from "@/layouts/app-layout";
-import { index } from "@/routes/incomes";
+import { create, index } from "@/routes/incomes";
 import { Income } from "@/types";
-import { Head } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 
 type IncomeIndexProps = {
     incomes: Income[];
@@ -12,7 +13,12 @@ function IncomeIndex({ incomes }: IncomeIndexProps) {
         <>
             <Head title="Incomes" />
             <div>
-                <h1>My Incomes</h1>
+                <div>
+                    <h1>My Incomes</h1>
+                    <Button asChild>
+                        <Link href={create()}>Add</Link>
+                    </Button>
+                </div>
                 <ul>
                     {incomes.map((income) => (
                         <li key={income.id}>
