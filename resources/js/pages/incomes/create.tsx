@@ -12,8 +12,8 @@ function IncomeCreate({ categories }: IncomeCreateProps) {
     return (
         <>
             <Head title="New Income" />
-            <div>
-                <h1>New Income</h1>
+            <div className="w-full mx-auto max-w-200 p-6 lg:p-10">
+                <h1 className="text-3xl font-bold mb-6 lg:mb-10">New Income</h1>
                 <CreateForm categories={categories} />
             </div>
         </>

@@ -1,11 +1,8 @@
-import { formatISO } from "date-fns";
 import { Form } from "@inertiajs/react";
 import { PlusIcon } from "lucide-react";
 
 import { store } from "@/routes/incomes";
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import InputError from "@/components/input-error";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import type { IncomeCategory } from "@/types";
@@ -18,80 +15,101 @@ import {
     SelectValue,
     SelectItem,
 } from "@/components/ui/select";
+import {
+    Field,
+    FieldError,
+    FieldGroup,
+    FieldLabel,
+    FieldSet,
+} from "@/components/ui/field";
+import { Textarea } from "@/components/ui/textarea";
+import DatePicker from "../date-picker";
 
 type CreateFormProps = {
     categories: IncomeCategory[];
 };
 
 function CreateForm({ categories }: CreateFormProps) {
-    const today = formatISO(new Date(), { representation: "date" });
-
     return (
         <Form action={store()}>
             {({ processing, errors }) => (
                 <>
-                    <div className="space-y-6">
-                        <div className="space-y-2">
-                            <Label htmlFor="amount">Amount(THB)</Label>
-                            <Input
-                                id="amount"
-                                name="amount"
-                                type="number"
-                                min={0.01}
-                                step={0.01}
-                                placeholder="15000"
-                                autoFocus
-                                required
-                            />
-                            <InputError message={errors.amount} />
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="note">Note</Label>
-                            <Input id="note" name="note" />
-                            <InputError message={errors.note} />
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="transaction_date" className="block">
-                                Date
-                            </Label>
-                            <Input
-                                id="transaction_date"
-                                name="transaction_date"
-                                type="date"
-                                defaultValue={today}
-                                max={today}
-                                required
-                            />
-                            <InputError message={errors.transaction_date} />
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="category">Category</Label>
-                            <Select name="category">
-                                <SelectTrigger id="category" className="w-full">
-                                    <SelectValue placeholder="Select a category" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectGroup>
-                                        <SelectLabel>
-                                            Income Categories
-                                        </SelectLabel>
-                                        {categories.map((category) => (
-                                            <SelectItem
-                                                key={category}
-                                                value={category}
-                                                className="capitalize"
-                                            >
-                                                {category}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectGroup>
-                                </SelectContent>
-                            </Select>
-                            <InputError message={errors.category} />
-                        </div>
-                    </div>
+                    <FieldSet>
+                        <FieldGroup>
+                            <Field>
+                                <FieldLabel htmlFor="amount">
+                                    Amount(THB)
+                                </FieldLabel>
+                                <Input
+                                    id="amount"
+                                    name="amount"
+                                    type="number"
+                                    min={0.01}
+                                    step={0.01}
+                                    placeholder="15000"
+                                    autoFocus
+                                    required
+                                    autoComplete="off"
+                                />
+                                <FieldError>{errors?.amount}</FieldError>
+                            </Field>
+                            <Field>
+                                <FieldLabel htmlFor="note">Note</FieldLabel>
+                                <Textarea
+                                    id="note"
+                                    name="note"
+                                    placeholder="(Optional)"
+                                />
+                                <FieldError>{errors?.note}</FieldError>
+                            </Field>
+                            <div className="flex flex-col lg:flex-row lg:gap-4 gap-6">
+                                <Field>
+                                    <FieldLabel htmlFor="transaction_date">
+                                        Date
+                                    </FieldLabel>
+                                    <DatePicker
+                                        id="transaction_date"
+                                        name="transaction_date"
+                                    />
+                                    <FieldError>
+                                        {errors?.transaction_date}
+                                    </FieldError>
+                                </Field>
+                                <Field>
+                                    <FieldLabel htmlFor="category">
+                                        Category
+                                    </FieldLabel>
+                                    <Select name="category">
+                                        <SelectTrigger
+                                            id="category"
+                                            className="w-full"
+                                        >
+                                            <SelectValue placeholder="Select a category" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                <SelectLabel>
+                                                    Income Categories
+                                                </SelectLabel>
+                                                {categories.map((category) => (
+                                                    <SelectItem
+                                                        key={category}
+                                                        value={category}
+                                                        className="capitalize"
+                                                    >
+                                                        {category}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
+                                    <FieldError>{errors?.category}</FieldError>
+                                </Field>
+                            </div>
+                        </FieldGroup>
+                    </FieldSet>
 
-                    <div className="mt-8">
+                    <div className="mt-10">
                         <Button type="submit" disabled={processing}>
                             Create
                             {processing ? <Spinner /> : <PlusIcon />}
