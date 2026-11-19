@@ -1,15 +1,20 @@
 import CreateForm from "@/components/incomes/create-form";
 import AppLayout from "@/layouts/app-layout";
 import { create, index } from "@/routes/incomes";
+import { IncomeCategory } from "@/types";
 import { Head } from "@inertiajs/react";
 
-function IncomeCreate() {
+type IncomeCreateProps = {
+    categories: IncomeCategory[];
+};
+
+function IncomeCreate({ categories }: IncomeCreateProps) {
     return (
         <>
             <Head title="New Income" />
             <div>
                 <h1>New Income</h1>
-                <CreateForm />
+                <CreateForm categories={categories} />
             </div>
         </>
     );

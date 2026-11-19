@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\IncomeCategory;
 use App\Models\Income;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -22,6 +23,7 @@ class IncomeFactory extends Factory
             'amount' => fake()->numberBetween(100 * 5_000, 100 * 30_000),
             'note' => fake()->sentence(),
             'transaction_date' => fake()->dateTimeBetween('-2 years', 'now'),
+            'category' => fake()->randomElement([...IncomeCategory::values(), null]),
             'user_id' => User::factory()
         ];
     }

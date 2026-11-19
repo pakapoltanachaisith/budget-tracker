@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\IncomeCategory;
 use App\Models\Income;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -26,7 +27,9 @@ class IncomeController extends Controller
             abort(403);
         }
 
-        return Inertia::render('incomes/create');
+        return Inertia::render('incomes/create', [
+            'categories' => IncomeCategory::values()
+        ]);
     }
 
     public function store(Request $request)
@@ -42,7 +45,8 @@ class IncomeController extends Controller
                 'sometimes',
                 'date',
                 Rule::date()->beforeOrEqual(today()),
-            ]
+            ],
+            'category' => ['nullable', Rule::enum(IncomeCategory::class)]
         ]);
 
         $request

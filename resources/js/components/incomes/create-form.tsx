@@ -8,8 +8,22 @@ import { Input } from "@/components/ui/input";
 import InputError from "@/components/input-error";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import type { IncomeCategory } from "@/types";
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+    SelectItem,
+} from "@/components/ui/select";
 
-function CreateForm() {
+type CreateFormProps = {
+    categories: IncomeCategory[];
+};
+
+function CreateForm({ categories }: CreateFormProps) {
     const today = formatISO(new Date(), { representation: "date" });
 
     return (
@@ -49,6 +63,31 @@ function CreateForm() {
                                 required
                             />
                             <InputError message={errors.transaction_date} />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="category">Category</Label>
+                            <Select name="category">
+                                <SelectTrigger id="category" className="w-full">
+                                    <SelectValue placeholder="Select a category" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectLabel>
+                                            Income Categories
+                                        </SelectLabel>
+                                        {categories.map((category) => (
+                                            <SelectItem
+                                                key={category}
+                                                value={category}
+                                                className="capitalize"
+                                            >
+                                                {category}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                            <InputError message={errors.category} />
                         </div>
                     </div>
 
