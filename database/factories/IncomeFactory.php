@@ -20,7 +20,7 @@ class IncomeFactory extends Factory
     public function definition(): array
     {
         return [
-            'amount' => fake()->numberBetween(100 * 5_000, 100 * 30_000),
+            'amount' => fake()->numberBetween(3_000, 30_000),
             'note' => fake()->sentence(),
             'transaction_date' => fake()->dateTimeBetween('-2 years', 'now'),
             'category' => fake()->randomElement([...IncomeCategory::values(), null]),
