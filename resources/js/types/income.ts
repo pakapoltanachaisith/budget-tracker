@@ -3,7 +3,7 @@ export type Income = {
     amount: number;
     note?: string;
     transaction_date: string;
-    categery: IncomeCategory | null;
+    category: IncomeCategory | null;
     user_id: number;
     created_at: string;
     updated_at: string;
