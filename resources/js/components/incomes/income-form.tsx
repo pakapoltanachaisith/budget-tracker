@@ -1,11 +1,11 @@
 import { Form } from "@inertiajs/react";
-import { PlusIcon } from "lucide-react";
+import { PlusIcon, SaveIcon } from "lucide-react";
 
-import { store } from "@/routes/incomes";
+import { store, update } from "@/routes/incomes";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
-import type { IncomeCategory } from "@/types";
+import type { Income, IncomeCategory } from "@/types";
 import {
     Select,
     SelectContent,
@@ -23,15 +23,20 @@ import {
     FieldSet,
 } from "@/components/ui/field";
 import { Textarea } from "@/components/ui/textarea";
-import DatePicker from "../date-picker";
+import DatePicker from "@/components/date-picker";
 
-type CreateFormProps = {
+type IncomeFormProps = {
     categories: IncomeCategory[];
+    initialData?: Income;
 };
 
-function CreateForm({ categories }: CreateFormProps) {
+function IncomeForm({ categories, initialData }: IncomeFormProps) {
+    const submitText = initialData ? "Save Changes" : "Create";
+    const SubmitIcon = initialData ? SaveIcon : PlusIcon;
+    const action = initialData ? update(initialData.id) : store();
+
     return (
-        <Form action={store()}>
+        <Form action={action}>
             {({ processing, errors }) => (
                 <>
                     <FieldSet>
@@ -50,6 +55,7 @@ function CreateForm({ categories }: CreateFormProps) {
                                     autoFocus
                                     required
                                     autoComplete="off"
+                                    defaultValue={initialData?.amount}
                                 />
                                 <FieldError>{errors?.amount}</FieldError>
                             </Field>
@@ -59,6 +65,7 @@ function CreateForm({ categories }: CreateFormProps) {
                                     id="note"
                                     name="note"
                                     placeholder="(Optional)"
+                                    defaultValue={initialData?.note}
                                 />
                                 <FieldError>{errors?.note}</FieldError>
                             </Field>
@@ -70,6 +77,13 @@ function CreateForm({ categories }: CreateFormProps) {
                                     <DatePicker
                                         id="transaction_date"
                                         name="transaction_date"
+                                        defaultValue={
+                                            initialData?.transaction_date
+                                                ? new Date(
+                                                      initialData.transaction_date,
+                                                  )
+                                                : new Date()
+                                        }
                                     />
                                     <FieldError>
                                         {errors?.transaction_date}
@@ -79,7 +93,12 @@ function CreateForm({ categories }: CreateFormProps) {
                                     <FieldLabel htmlFor="category">
                                         Category
                                     </FieldLabel>
-                                    <Select name="category">
+                                    <Select
+                                        name="category"
+                                        defaultValue={
+                                            initialData?.category as string
+                                        }
+                                    >
                                         <SelectTrigger
                                             id="category"
                                             className="w-full"
@@ -111,8 +130,8 @@ function CreateForm({ categories }: CreateFormProps) {
 
                     <div className="mt-10">
                         <Button type="submit" disabled={processing}>
-                            Create
-                            {processing ? <Spinner /> : <PlusIcon />}
+                            {submitText}
+                            {processing ? <Spinner /> : <SubmitIcon />}
                         </Button>
                     </div>
                 </>
@@ -120,4 +139,4 @@ function CreateForm({ categories }: CreateFormProps) {
         </Form>
     );
 }
-export default CreateForm;
+export default IncomeForm;
