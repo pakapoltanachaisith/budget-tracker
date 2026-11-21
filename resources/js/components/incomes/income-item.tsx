@@ -1,5 +1,3 @@
-import { MoreVerticalIcon, WalletIcon } from "lucide-react";
-
 import { Income } from "@/types";
 import {
     Item,
@@ -10,8 +8,8 @@ import {
     ItemTitle,
 } from "@/components/ui/item";
 import { formatTHB, formatTransactionDate } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import CategoryIcon from "./category-icon";
+import CategoryIcon from "@/components/incomes/category-icon";
+import IncomeItemMenu from "./income-item-menu";
 
 type IncomeItemProps = {
     data: Income;
@@ -39,10 +37,7 @@ export default function IncomeItem({ data }: IncomeItemProps) {
                 </ItemDescription>
             </ItemContent>
             <ItemActions>
-                <Button variant="secondary" size="icon">
-                    <span className="sr-only">action</span>
-                    <MoreVerticalIcon />
-                </Button>
+                <IncomeItemMenu incomeId={data.id} />
             </ItemActions>
         </Item>
     );
