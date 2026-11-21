@@ -90,4 +90,15 @@ class IncomeController extends Controller
 
         return to_route('incomes.index');
     }
+
+    public function destroy(Request $request, Income $income)
+    {
+        if ($request->user()->cannot('delete', $income)) {
+            abort(403);
+        }
+
+        $income->delete();
+
+        return to_route('incomes.index');
+    }
 }

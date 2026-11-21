@@ -1,4 +1,4 @@
-import { EditIcon, MoreVerticalIcon } from "lucide-react";
+import { EditIcon, MoreVerticalIcon, TrashIcon } from "lucide-react";
 import { Link } from "@inertiajs/react";
 
 import {
@@ -13,9 +13,10 @@ import { edit } from "@/routes/incomes";
 
 type IncomeItemMenuProps = {
     incomeId: number;
+    onDelete: () => void;
 };
 
-function IncomeItemMenu({ incomeId }: IncomeItemMenuProps) {
+function IncomeItemMenu({ incomeId, onDelete }: IncomeItemMenuProps) {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -31,6 +32,10 @@ function IncomeItemMenu({ incomeId }: IncomeItemMenuProps) {
                             <EditIcon className="mr-2" />
                             Edit
                         </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem variant="destructive" onClick={onDelete}>
+                        <TrashIcon className="mr-2" />
+                        Delete
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
             </DropdownMenuContent>

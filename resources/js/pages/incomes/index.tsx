@@ -1,17 +1,29 @@
+import { useState } from "react";
 import { PlusIcon } from "lucide-react";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 
+import type { Income } from "@/types";
 import IncomeItem from "@/components/incomes/income-item";
 import { Button } from "@/components/ui/button";
 import AppLayout from "@/layouts/app-layout";
 import { create, index } from "@/routes/incomes";
-import type { Income } from "@/types";
+import ConfirmationModal from "@/components/confirmation-modal";
+import { destroy } from "@/actions/App/Http/Controllers/IncomeController";
 
 type IncomeIndexProps = {
     incomes: Income[];
 };
 
 function IncomeIndex({ incomes }: IncomeIndexProps) {
+    const [deletingId, setDeletingId] = useState<number | null>(null);
+
+    const deleteIncome = () => {
+        if (!deletingId) return;
+        router.delete(destroy(deletingId), {
+            preserveScroll: true,
+        });
+    };
+
     return (
         <>
             <Head title="Incomes" />
@@ -27,10 +39,24 @@ function IncomeIndex({ incomes }: IncomeIndexProps) {
 
                 <div className="space-y-6">
                     {incomes.map((income) => (
-                        <IncomeItem key={income.id} data={income} />
+                        <IncomeItem
+                            key={income.id}
+                            data={income}
+                            onDelete={(id) => setDeletingId(id)}
+                        />
                     ))}
                 </div>
             </div>
+
+            <ConfirmationModal
+                open={!!deletingId}
+                onCancel={() => setDeletingId(null)}
+                title="Do you want to delete this income?"
+                description="This action cannot be undone. This will permanently delete your income record
+        from our servers."
+                onConfirm={deleteIncome}
+                actionVariant="destructive"
+            />
         </>
     );
 }

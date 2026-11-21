@@ -13,9 +13,10 @@ import IncomeItemMenu from "./income-item-menu";
 
 type IncomeItemProps = {
     data: Income;
+    onDelete: (id: number) => void;
 };
 
-export default function IncomeItem({ data }: IncomeItemProps) {
+export default function IncomeItem({ data, onDelete }: IncomeItemProps) {
     return (
         <Item variant="muted">
             {data.categery !== null && (
@@ -37,7 +38,10 @@ export default function IncomeItem({ data }: IncomeItemProps) {
                 </ItemDescription>
             </ItemContent>
             <ItemActions>
-                <IncomeItemMenu incomeId={data.id} />
+                <IncomeItemMenu
+                    incomeId={data.id}
+                    onDelete={() => onDelete(data.id)}
+                />
             </ItemActions>
         </Item>
     );
