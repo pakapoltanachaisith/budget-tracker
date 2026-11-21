@@ -1,5 +1,6 @@
 import { Form } from "@inertiajs/react";
 import { PlusIcon, SaveIcon } from "lucide-react";
+import { toast } from "sonner";
 
 import { store, update } from "@/routes/incomes";
 import { Input } from "@/components/ui/input";
@@ -35,8 +36,18 @@ function IncomeForm({ categories, initialData }: IncomeFormProps) {
     const SubmitIcon = initialData ? SaveIcon : PlusIcon;
     const action = initialData ? update(initialData.id) : store();
 
+    const successToastMessage = initialData
+        ? "Income record updated successfully!"
+        : "New income record created!";
+
     return (
-        <Form action={action}>
+        <Form
+            action={action}
+            onSuccess={() => toast.success(successToastMessage)}
+            onError={() =>
+                toast("Something went wrong. Please try again later.")
+            }
+        >
             {({ processing, errors }) => (
                 <>
                     <FieldSet>

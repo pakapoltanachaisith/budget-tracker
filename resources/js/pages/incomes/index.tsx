@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { PlusIcon } from "lucide-react";
 import { Head, Link, router } from "@inertiajs/react";
+import { toast } from "sonner";
 
 import type { Income } from "@/types";
 import IncomeItem from "@/components/incomes/income-item";
@@ -21,6 +22,10 @@ function IncomeIndex({ incomes }: IncomeIndexProps) {
         if (!deletingId) return;
         router.delete(destroy(deletingId), {
             preserveScroll: true,
+            onSuccess: () =>
+                toast.success("New income record deleted successfully!"),
+            onError: () =>
+                toast.error("Something went wrong. Please try again later."),
         });
     };
 
