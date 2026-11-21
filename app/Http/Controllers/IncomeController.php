@@ -56,4 +56,38 @@ class IncomeController extends Controller
 
         return to_route('incomes.index');
     }
+
+    public function edit(Request $request, Income $income)
+    {
+        if ($request->user()->cannot('update', $income)) {
+            abort(403);
+        }
+
+        return Inertia::render('incomes/edit', [
+            'income' => $income,
+            'categories' => IncomeCategory::values()
+        ]);
+    }
+
+    public function update(Request $request, Income $income)
+    {
+        if ($request->user()->cannot('update', $income)) {
+            abort(403);
+        }
+
+        $validated = $request->validate([
+            'amount' => ['required', 'decimal:0,2', 'min:0.01'],
+            'note' => ['nullable', 'string', 'max:255'],
+            'transaction_date' => [
+                'sometimes',
+                'date',
+                Rule::date()->beforeOrEqual(today()),
+            ],
+            'category' => ['nullable', Rule::enum(IncomeCategory::class)]
+        ]);
+
+        $income->update($validated);
+
+        return to_route('incomes.index');
+    }
 }
