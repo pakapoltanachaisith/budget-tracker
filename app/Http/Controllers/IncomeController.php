@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Enums\IncomeCategory;
+use App\Http\Requests\StoreIncomeRequest;
+use App\Http\Requests\UpdateIncomeRequest;
 use App\Models\Income;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class IncomeController extends Controller
@@ -32,22 +33,13 @@ class IncomeController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(StoreIncomeRequest $request)
     {
         if ($request->user()->cannot('create', Income::class)) {
             abort(403);
         }
 
-        $validated = $request->validate([
-            'amount' => ['required', 'decimal:0,2', 'min:0.01'],
-            'note' => ['nullable', 'string', 'max:255'],
-            'transaction_date' => [
-                'sometimes',
-                'date',
-                Rule::date()->beforeOrEqual(today()),
-            ],
-            'category' => ['nullable', Rule::enum(IncomeCategory::class)]
-        ]);
+        $validated = $request->validated();
 
         $request
             ->user()
@@ -69,22 +61,13 @@ class IncomeController extends Controller
         ]);
     }
 
-    public function update(Request $request, Income $income)
+    public function update(UpdateIncomeRequest $request, Income $income)
     {
         if ($request->user()->cannot('update', $income)) {
             abort(403);
         }
 
-        $validated = $request->validate([
-            'amount' => ['required', 'decimal:0,2', 'min:0.01'],
-            'note' => ['nullable', 'string', 'max:255'],
-            'transaction_date' => [
-                'sometimes',
-                'date',
-                Rule::date()->beforeOrEqual(today()),
-            ],
-            'category' => ['nullable', Rule::enum(IncomeCategory::class)]
-        ]);
+        $validated = $request->validated();
 
         $income->update($validated);
 
